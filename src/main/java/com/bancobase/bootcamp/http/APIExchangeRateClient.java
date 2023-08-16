@@ -3,9 +3,10 @@ package com.bancobase.bootcamp.http;
 import com.bancobase.bootcamp.dto.response.*;
 import com.bancobase.bootcamp.exceptions.ServiceProviderException;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
+@Component
 public class APIExchangeRateClient {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -47,7 +48,7 @@ public class APIExchangeRateClient {
         HttpEntity<String> headersAndBody = new HttpEntity<>(headers);
 
         ResponseEntity<SymbolsNameResponse> responseEntity = this.restTemplate
-        .exchange(url, HttpMethod.GET, headersAndBody, SymbolsNameResponse.class);
+                .exchange(url, HttpMethod.GET, headersAndBody, SymbolsNameResponse.class);
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             return responseEntity.getBody();
@@ -57,7 +58,6 @@ public class APIExchangeRateClient {
                 .builder()
                 .message("Oh no! An error occurred while connecting to our exchange rate provider.")
                 .build();
-
-        return new SymbolsNameResponse();
     }
+
 }
